@@ -1,0 +1,19 @@
+{
+  "name": "dsl-text-analysis",
+  "version": "1.0.0",
+  "description": "A list of plugins to visualize text and perform sentiment analysis.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/data-science-lab-app/dsl-text-analysis.git"
+  },
+  "author": "Cobe Greene",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/data-science-lab-app/dsl-text-analysis/issues"
+  },
+  "homepage": "https://github.com/data-science-lab-app/dsl-text-analysis#readme"
+}
