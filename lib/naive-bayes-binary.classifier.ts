@@ -62,7 +62,7 @@ export class NaiveBayesBinaryClassifier extends AlgorithmPlugin {
 
     tokenize(text: string): Set<string> {
         text = text.toLowerCase();
-        const tokens = text.match("[a-z0-9']+")?.map((value) => value);
+        const tokens = text.match(/[a-z0-9']+/g)?.map((value) => value);
         if (tokens) {
             return new Set(tokens);
         }
@@ -72,12 +72,14 @@ export class NaiveBayesBinaryClassifier extends AlgorithmPlugin {
     initialize() {
         this.data.positiveTest = 0;
         this.data.negativeTest = 0;
-
+        this.data.positiveTokens = {};
+        this.data.negativeTokens = {};
+        
         const allTokens = new Set<string>();
 
         for (let i = 0; i < this.data.labels.length; ++i) {
             const tokens = this.tokenize(this.data.examples[i]);
-            if (this.data.labels[i] === i) {
+            if (this.data.labels[i] === 1) {
                 this.data.positiveTest += 1;
                 tokens.forEach((token) => {
                     allTokens.add(token);
@@ -128,6 +130,7 @@ export class NaiveBayesBinaryClassifier extends AlgorithmPlugin {
 
         let prob_if_pos = Math.exp(log_prob_if_pos);
         let prob_if_neg = Math.exp(log_prob_if_neg);
+        
         const prediction = (prob_if_pos / (prob_if_pos + prob_if_neg)) > 0.5 ? 1.0 : 0.0;
 
         return {
