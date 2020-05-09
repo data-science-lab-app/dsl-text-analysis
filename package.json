@@ -20,6 +20,23 @@
     "url": "https://github.com/data-science-lab-app/dsl-text-analysis/issues"
   },
   "homepage": "https://github.com/data-science-lab-app/dsl-text-analysis#readme",
+  "data_science_lab": [
+    {
+      "name": "Word Cloud",
+      "type": "Visualization",
+      "classname": "WordCloud"
+    },
+    {
+      "name": "Word Lollipop",
+      "type": "Visualization",
+      "classname": "WordLollipop"
+    },
+    {
+      "name": "Naive Bayes Binary Classifier",
+      "type": "Algorithm",
+      "classname": "NaiveBayesBinaryClassifier"
+    }
+  ],
   "dependencies": {
     "data-science-lab-core": "^0.0.30"
   },
