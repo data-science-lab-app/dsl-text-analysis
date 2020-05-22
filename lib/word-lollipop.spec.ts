@@ -2,90 +2,84 @@ import { WordLollipop } from "./word-lollipop";
 import { PluginData } from "data-science-lab-core";
 
 
-
 describe('Word Lollipop Tests', () => {
-    let cloud: WordLollipop;
+    let lollipop: WordLollipop;
 
     const testingInput: {[id: string]: PluginData} = {
         'texts': {
             features: ['text'],
-            examples: [['one'], ['two'], ['one two'], ['three,four']]
+            examples: [['one'], ['two'], ['one two'], ['three\'s four five, six']]
         }
     };
 
     beforeEach(() => {
-        cloud = new WordLollipop();
+        lollipop = new WordLollipop();
     });
 
     it('inputs should return 1', () => {
-        expect(cloud.getInputs().inputs().length).toBe(1);
+        expect(lollipop.getInputs().inputs().length).toBe(1);
     });
 
     it('submit should throw for no texts', () => {
         expect(() => {
-            cloud.getInputs().submit({
+            lollipop.getInputs().submit({
             });
         }).toThrowError();
     });
 
     describe('after submit inputs', () => {
         beforeEach(() => {
-            cloud.getInputs().submit(testingInput);
+            lollipop.getInputs().submit(testingInput);
         });
 
         it('no more to return false', () => {
-            expect(cloud.getOptions().noMore()).toBeFalsy();
+            expect(lollipop.getOptions().noMore()).toBeFalsy();
         }); 
 
         it('options should return one text option', () => {
-            expect(cloud.getOptions().options().length).toBe(1);
+            expect(lollipop.getOptions().options().length).toBe(1);
         });
 
-        it('option submit seperator', () => {
-            cloud.getOptions().submit({
-                'seperator': ','
+        it('option submit top', () => {
+            lollipop.getOptions().submit({
+                'top': 1
             });
-            expect(cloud.data.seperator).toBe(',');
-            expect(cloud.getOptions().noMore()).toBe(true);
+            expect(lollipop.data.top).toBe(1);
+            expect(lollipop.getOptions().noMore()).toBe(true);
         });
 
-        it('option without seperator should be space', () => {
-            cloud.getOptions().submit({
-            });
-            expect(cloud.data.seperator).toBe(' ');
-            expect(cloud.getOptions().noMore()).toBe(true);
-        });
 
-        it('space seperartor should return words', () => {
-            cloud.getOptions().submit({
+        it('top 6 should return words', () => {
+            lollipop.getOptions().submit({
+                'top': 6
             });
-            const words = cloud.createWords();
+            const words = lollipop.createWords();
             expect(words).toEqual([
                 { text: 'one', size: 2},
                 { text: 'two', size: 2},
-                { text: 'three,four', size: 1},
+                { text: 'three\'s', size: 1},
+                { text: 'four', size: 1},
+                { text: 'five', size: 1},
+                { text: 'six', size: 1},
             ])
         });
         
-        it('comma seperartor should return words', () => {
-            cloud.getOptions().submit({
-                'seperator': ','
+        it('top 2 should return words', () => {
+            lollipop.getOptions().submit({
+                'top': 2
             });
-            const words = cloud.createWords();
+            const words = lollipop.createWords();
             expect(words).toEqual([
-                { text: 'one', size: 1},
-                { text: 'two', size: 1},
-                { text: 'one two', size: 1},
-                { text: 'three', size: 1},
-                { text: 'four', size: 1},
+                { text: 'one', size: 2},
+                { text: 'two', size: 2},
             ])
         });
-
+        
         it('visualization should return string', () => {
-            cloud.getOptions().submit({
-                'seperator': ','
+            lollipop.getOptions().submit({
+                'top': 1
             });
-            expect(cloud.visualization()).toBeDefined();
+            expect(lollipop.visualization()).toBeDefined();
         });
 
 

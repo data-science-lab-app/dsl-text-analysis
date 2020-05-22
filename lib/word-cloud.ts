@@ -3,7 +3,7 @@ import { VisualizationPlugin, PluginInputs, PluginOptions, PluginDataInput, Plug
 
 interface WordCloudData {
     texts: string[];
-    seperator: string;
+    top: number;
 }
 
 export class WordCloud extends VisualizationPlugin {
@@ -30,14 +30,18 @@ export class WordCloud extends VisualizationPlugin {
 
     createWords(): { text: string, size: number }[] {
         const words: { [word: string]: number } = {};
-        ([] as string[]).concat(...this.data.texts.map((value) => value.split(this.data.seperator))).map((value) => {
-            if (!!words[value]) {
-                words[value]++;
-            } else {
-                words[value] = 1;
+        this.data.texts.map((value) => value.match(/[a-z0-9']+/g)).forEach((value) => {
+            if (value) {
+                value.forEach((match) => {
+                    if (!!words[match]) {
+                        words[match]++;
+                    } else {
+                        words[match] = 1;
+                    }
+                })
             }
         });
-        return Object.entries(words).map(([text, size]) => ({ text, size }));
+        return Object.entries(words).map(([text, size]) => ({ text, size })).sort((a, b) => b.size - a.size).slice(0, this.data.top);
     }
 
     visualization(): string {
@@ -110,8 +114,8 @@ export class WordCloud extends VisualizationPlugin {
         this.data.texts = texts;
     }
 
-    setSeperator(seperator: string) {
-        this.data.seperator = seperator;
+    setTop(top: number) {
+        this.data.top = top;
     }
 }
 
@@ -152,16 +156,12 @@ class WordCloudOptions extends PluginOptions {
 
     options(): Option[] {
         return [
-            new TextOption({ id: 'seperator', label: 'Type a seperator or space will be used.', min: 0 })
+            new NumberOption({id: 'top', label: 'Show only the top X number of occurances (Enter for X).', min: 1})
         ];
     }
 
     submit(inputs: { [id: string]: any; }): void {
-        if (!inputs['seperator']) {
-            this.wordCloud.setSeperator(' ');
-        } else {
-            this.wordCloud.setSeperator(inputs['seperator']);
-        }
+        this.wordCloud.setTop(inputs['top']);
         this.state = 2;
     }
 

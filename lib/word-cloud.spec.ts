@@ -9,7 +9,7 @@ describe('Word Cloud Tests', () => {
     const testingInput: {[id: string]: PluginData} = {
         'texts': {
             features: ['text'],
-            examples: [['one'], ['two'], ['one two'], ['three,four']]
+            examples: [['one'], ['two'], ['one two'], ['three\'s four five, six']]
         }
     };
 
@@ -41,49 +41,44 @@ describe('Word Cloud Tests', () => {
             expect(cloud.getOptions().options().length).toBe(1);
         });
 
-        it('option submit seperator', () => {
+        it('option submit top', () => {
             cloud.getOptions().submit({
-                'seperator': ','
+                'top': 1
             });
-            expect(cloud.data.seperator).toBe(',');
+            expect(cloud.data.top).toBe(1);
             expect(cloud.getOptions().noMore()).toBe(true);
         });
 
-        it('option without seperator should be space', () => {
-            cloud.getOptions().submit({
-            });
-            expect(cloud.data.seperator).toBe(' ');
-            expect(cloud.getOptions().noMore()).toBe(true);
-        });
 
-        it('space seperartor should return words', () => {
+        it('top 6 should return words', () => {
             cloud.getOptions().submit({
+                'top': 6
             });
             const words = cloud.createWords();
             expect(words).toEqual([
                 { text: 'one', size: 2},
                 { text: 'two', size: 2},
-                { text: 'three,four', size: 1},
+                { text: 'three\'s', size: 1},
+                { text: 'four', size: 1},
+                { text: 'five', size: 1},
+                { text: 'six', size: 1},
             ])
         });
         
-        it('comma seperartor should return words', () => {
+        it('top 2 should return words', () => {
             cloud.getOptions().submit({
-                'seperator': ','
+                'top': 2
             });
             const words = cloud.createWords();
             expect(words).toEqual([
-                { text: 'one', size: 1},
-                { text: 'two', size: 1},
-                { text: 'one two', size: 1},
-                { text: 'three', size: 1},
-                { text: 'four', size: 1},
+                { text: 'one', size: 2},
+                { text: 'two', size: 2},
             ])
         });
-
+        
         it('visualization should return string', () => {
             cloud.getOptions().submit({
-                'seperator': ','
+                'top': 1
             });
             expect(cloud.visualization()).toBeDefined();
         });

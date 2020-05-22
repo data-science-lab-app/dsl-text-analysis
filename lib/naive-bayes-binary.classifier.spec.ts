@@ -92,7 +92,7 @@ describe('Naive Bayes Binary Classifier Tests', () => {
                 'input': ['hello spam']
             });
             expect(outcome).toEqual({
-                'output': [1]
+                'label': [1]
             })
         });
         
@@ -102,7 +102,7 @@ describe('Naive Bayes Binary Classifier Tests', () => {
                 'input': ['spam rules']
             });
             expect(outcome).toEqual({
-                'output': [1]
+                'label': [1]
             })
         });
         
@@ -112,7 +112,7 @@ describe('Naive Bayes Binary Classifier Tests', () => {
                 'input': ['ham rules']
             });
             expect(outcome).toEqual({
-                'output': [0]
+                'label': [0]
             })
         });
         
@@ -122,7 +122,7 @@ describe('Naive Bayes Binary Classifier Tests', () => {
                 'input': ['hello ham']
             });
             expect(outcome).toEqual({
-                'output': [0]
+                'label': [0]
             })
         });
         

@@ -134,7 +134,7 @@ export class NaiveBayesBinaryClassifier extends AlgorithmPlugin {
         const prediction = (prob_if_pos / (prob_if_pos + prob_if_neg)) > 0.5 ? 1.0 : 0.0;
 
         return {
-            'output': [prediction]
+            'label': [prediction]
         };
     }
 
