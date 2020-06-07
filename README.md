@@ -8,10 +8,10 @@ Plugins include:
 * Naive Bayes Binary Classifier
 
 ## Word Cloud
-![Word Cloud Example](images/word-cloud.PNG)
+![Word Cloud Example](https://raw.githubusercontent.com/data-science-lab-app/dsl-text-analysis/master/images/word-cloud.PNG)
 
 ## Word Lollipop
-![Word Lollipop Example](images/word-lollipop.PNG)
+![Word Lollipop Example](https://raw.githubusercontent.com/data-science-lab-app/dsl-text-analysis/master/images/word-lollipop.PNG)
 
 ## Naive Bayes Binary Classifer
-![Naive Bayes Binary Classifier Explaination](https://miro.medium.com/max/6190/1*39U1Ln3tSdFqsfQy6ndxOA.png)
+<img src="https://miro.medium.com/max/6190/1*39U1Ln3tSdFqsfQy6ndxOA.png" width="500" height="300" />
